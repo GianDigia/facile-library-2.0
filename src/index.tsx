@@ -1,5 +1,6 @@
 import './index.css'
 import 'typeface-roboto'
+import '@csstools/normalize.css/opinionated.css'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
