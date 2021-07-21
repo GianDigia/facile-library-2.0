@@ -1,3 +1,6 @@
+import './index.css'
+import 'typeface-roboto'
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 
