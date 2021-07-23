@@ -1,9 +1,12 @@
 import React from 'react'
+import { useErrorHandler } from 'react-error-boundary'
 
 import LoadingPage from '../loading/LoadingPage'
 import useBooks from './hooks/useBooks'
 
-const Books = (): JSX.Element => {
+const Books = (): JSX.Element | null => {
+  const handleError = useErrorHandler()
+
   const { data, error, isLoading } = useBooks()
 
   if (isLoading) {
@@ -11,7 +14,8 @@ const Books = (): JSX.Element => {
   }
 
   if (error) {
-    return <div>An error has occurred: {JSON.stringify(error)}</div>
+    handleError(error)
+    return null
   }
 
   return (
