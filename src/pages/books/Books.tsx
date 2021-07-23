@@ -1,12 +1,13 @@
 import React from 'react'
 
+import LoadingPage from '../loading/LoadingPage'
 import useBooks from './hooks/useBooks'
 
 const Books = (): JSX.Element => {
   const { data, error, isLoading } = useBooks()
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <LoadingPage />
   }
 
   if (error) {
