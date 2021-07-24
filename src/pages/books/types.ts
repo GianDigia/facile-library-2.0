@@ -5,3 +5,5 @@ export interface Book {
   year: number
   isbn: string
 }
+
+export type BooksFilters = Partial<Pick<Book, 'author' | 'isbn'>>
