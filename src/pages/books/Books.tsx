@@ -1,7 +1,8 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useErrorHandler } from 'react-error-boundary'
 
 import LoadingPage from '../loading/LoadingPage'
+import BookModal from './components/BookModal'
 import BooksHeader from './components/BooksHeader'
 import BooksList from './components/BooksList'
 import useBooks from './hooks/useBooks'
@@ -13,6 +14,15 @@ const Books = (): JSX.Element | null => {
   const [filters, setFilters] = useState<BooksFilters>({})
 
   const [selectedBookId, setSelectedBookId] = useState<selectedBookIdType>(null)
+  const resetSelectedBookId = useCallback(() => setSelectedBookId(null), [])
+
+  const [isOpen, setIsOpen] = useState(false)
+  const closeModal = useCallback(() => setIsOpen(false), [])
+
+  useEffect(() => {
+    selectedBookId && setIsOpen(true)
+  }, [selectedBookId])
+
   const updateFilters = useCallback(
     (newFilters: BooksFilters) =>
       setFilters((filters) => ({ ...filters, ...newFilters })),
@@ -34,11 +44,21 @@ const Books = (): JSX.Element | null => {
     <>
       <BooksHeader filters={filters} updateFilters={updateFilters} />
       {books && (
-        <BooksList
-          setSelectedBookId={setSelectedBookId}
-          filters={filters}
-          books={books}
-        />
+        <>
+          <BooksList
+            setSelectedBookId={setSelectedBookId}
+            filters={filters}
+            books={books}
+          />
+          {selectedBookId && (
+            <BookModal
+              onAfterClose={resetSelectedBookId}
+              bookId={selectedBookId}
+              isOpen={isOpen}
+              closeModal={closeModal}
+            />
+          )}
+        </>
       )}
     </>
   )
