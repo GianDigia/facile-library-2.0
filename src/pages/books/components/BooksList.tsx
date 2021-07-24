@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 
 import { Book, BooksFilters } from '../types'
 import { filterBook } from '../utils'
+import EmptyBookList from './EmptyBookList'
 
 interface Props {
   filters: BooksFilters
@@ -14,7 +15,7 @@ const BooksList = ({ books, filters }: Props): JSX.Element => {
     [books, filters]
   )
 
-  return (
+  return filteredBooks.length ? (
     <div>
       {filteredBooks?.map((book) => (
         <div key={book.id}>
@@ -22,6 +23,8 @@ const BooksList = ({ books, filters }: Props): JSX.Element => {
         </div>
       ))}
     </div>
+  ) : (
+    <EmptyBookList />
   )
 }
 
