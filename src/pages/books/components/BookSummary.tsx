@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
 
 import Button from '../../../components/button/Button'
 import { Book } from '../types'
+import ReceiptModal from './ReceiptModal'
 
 interface Props {
   book: Book
@@ -10,6 +11,10 @@ interface Props {
 
 const BookSummary = ({ book }: Props): JSX.Element => {
   const { author, id, isbn, title, year } = book
+
+  const [showReceiptModal, setShowReceiptModal] = useState(false)
+  const openReceiptModal = useCallback(() => setShowReceiptModal(true), [])
+  const closeReceiptModal = useCallback(() => setShowReceiptModal(false), [])
 
   return (
     <div>
@@ -49,10 +54,13 @@ const BookSummary = ({ book }: Props): JSX.Element => {
       <Row>
         <Button
           text={'Compralo ora'}
+          onClick={openReceiptModal}
           primaryColor={'#f60'}
           secondaryColor={'white'}
         />
       </Row>
+
+      <ReceiptModal isOpen={showReceiptModal} closeModal={closeReceiptModal} />
     </div>
   )
 }
