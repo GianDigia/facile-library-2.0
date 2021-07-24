@@ -30,10 +30,11 @@ const BooksList = ({ books, filters }: Props): JSX.Element => {
 
 const CardsWrapper = styled.div`
   margin-top: 30px;
-  display: flex;
-  flex-wrap: wrap;
   padding: 20px;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  justify-content: space-evenly;
+  grid-gap: 30px;
 `
 
 export default BooksList
