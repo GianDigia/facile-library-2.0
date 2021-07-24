@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react'
+import styled from 'styled-components'
 
 import { Book, BooksFilters } from '../types'
 import { filterBook } from '../utils'
+import BookCard from './BookCard'
 import EmptyBookList from './EmptyBookList'
 
 interface Props {
@@ -16,16 +18,22 @@ const BooksList = ({ books, filters }: Props): JSX.Element => {
   )
 
   return filteredBooks.length ? (
-    <div>
-      {filteredBooks?.map((book) => (
-        <div key={book.id}>
-          {book.title} - {book.author}
-        </div>
+    <CardsWrapper>
+      {filteredBooks?.map((book, key) => (
+        <BookCard key={key} book={book} />
       ))}
-    </div>
+    </CardsWrapper>
   ) : (
     <EmptyBookList />
   )
 }
+
+const CardsWrapper = styled.div`
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  gap: 20px;
+`
 
 export default BooksList
