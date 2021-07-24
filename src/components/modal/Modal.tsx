@@ -9,7 +9,7 @@ export interface ModalProps extends ReactModal.Props {
   closeModal: () => void
   children?: ReactNode
   title?: string
-  onAfterClose: () => void
+  small?: boolean
 }
 
 const Modal = ({
@@ -17,6 +17,7 @@ const Modal = ({
   closeModal,
   isOpen,
   onAfterClose,
+  small = false,
   title,
 }: ModalProps): JSX.Element => {
   useEffect(() => {
@@ -26,13 +27,15 @@ const Modal = ({
     }
   }, [])
 
+  const style = small ? smallStyle : largeStyle
+
   return (
     <CSSTransition in={isOpen} timeout={250} classNames='dialog'>
       <ReactModal
         onAfterClose={onAfterClose}
         closeTimeoutMS={250}
         isOpen={isOpen}
-        style={modalStyle}
+        style={style}
         shouldCloseOnOverlayClick
         shouldCloseOnEsc
       >
@@ -75,7 +78,7 @@ const CloseIcon = styled.div`
 
 ReactModal.setAppElement('#root')
 
-const modalStyle: Styles = {
+const largeStyle: Styles = {
   overlay: {
     backgroundColor: 'rgb(0, 0, 0, 30%)',
   },
@@ -87,6 +90,23 @@ const modalStyle: Styles = {
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
     maxWidth: '800px',
+    width: '85%',
+    maxHeight: '600px',
+  },
+}
+
+const smallStyle: Styles = {
+  overlay: {
+    backgroundColor: 'rgb(0, 0, 0, 30%)',
+  },
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    maxWidth: '400px',
     width: '85%',
     maxHeight: '600px',
   },
