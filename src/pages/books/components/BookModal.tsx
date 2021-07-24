@@ -5,6 +5,7 @@ import Modal, { ModalProps } from '../../../components/modal/Modal'
 import LoadingPage from '../../loading/LoadingPage'
 import useBook from '../hooks/useBook'
 import { Book } from '../types'
+import BookSummary from './BookSummary'
 
 interface Props extends Omit<ModalProps, 'title'> {
   bookId: Book['id']
@@ -22,7 +23,7 @@ const BookModal = ({ bookId, ...rest }: Props): JSX.Element => {
 
   return (
     <Modal {...rest} title={'Riepilogo del libro'}>
-      {isLoading ? <LoadingPage /> : book && JSON.stringify(book)}
+      {isLoading ? <LoadingPage /> : book && <BookSummary book={book} />}
     </Modal>
   )
 }
