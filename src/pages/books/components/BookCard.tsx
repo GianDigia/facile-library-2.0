@@ -1,17 +1,22 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction, useCallback } from 'react'
 import styled from 'styled-components'
 
-import { Book } from '../types'
+import { Book, selectedBookIdType } from '../types'
 
 interface Props {
   book: Book
+  setSelectedBookId: Dispatch<SetStateAction<selectedBookIdType>>
 }
 
-const BookCard = ({ book }: Props): JSX.Element => {
+const BookCard = ({ book, setSelectedBookId }: Props): JSX.Element => {
   const { author, id, isbn, title, year } = book
 
+  const handleClick = useCallback(() => {
+    setSelectedBookId(id)
+  }, [id, setSelectedBookId])
+
   return (
-    <Wrapper>
+    <Wrapper onClick={handleClick}>
       <PictureWrapper>
         <Picture img={`https://picsum.photos/id/${id}/200/300`} />
       </PictureWrapper>

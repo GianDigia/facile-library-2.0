@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react'
+import React, { Dispatch, SetStateAction, useMemo } from 'react'
 import styled from 'styled-components'
 
-import { Book, BooksFilters } from '../types'
+import { Book, BooksFilters, selectedBookIdType } from '../types'
 import { filterBook } from '../utils'
 import BookCard from './BookCard'
 import EmptyBookList from './EmptyBookList'
@@ -9,9 +9,14 @@ import EmptyBookList from './EmptyBookList'
 interface Props {
   filters: BooksFilters
   books: Book[]
+  setSelectedBookId: Dispatch<SetStateAction<selectedBookIdType>>
 }
 
-const BooksList = ({ books, filters }: Props): JSX.Element => {
+const BooksList = ({
+  books,
+  filters,
+  setSelectedBookId,
+}: Props): JSX.Element => {
   const filteredBooks = useMemo(
     () => books.filter((book) => filterBook(book, filters)),
     [books, filters]
@@ -20,7 +25,7 @@ const BooksList = ({ books, filters }: Props): JSX.Element => {
   return filteredBooks.length ? (
     <CardsWrapper>
       {filteredBooks?.map((book, key) => (
-        <BookCard key={key} book={book} />
+        <BookCard key={key} book={book} setSelectedBookId={setSelectedBookId} />
       ))}
     </CardsWrapper>
   ) : (

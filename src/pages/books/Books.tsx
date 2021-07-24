@@ -5,13 +5,14 @@ import LoadingPage from '../loading/LoadingPage'
 import BooksHeader from './components/BooksHeader'
 import BooksList from './components/BooksList'
 import useBooks from './hooks/useBooks'
-import { BooksFilters } from './types'
+import { BooksFilters, selectedBookIdType } from './types'
 
 const Books = (): JSX.Element | null => {
   const handleError = useErrorHandler()
 
   const [filters, setFilters] = useState<BooksFilters>({})
 
+  const [selectedBookId, setSelectedBookId] = useState<selectedBookIdType>(null)
   const updateFilters = useCallback(
     (newFilters: BooksFilters) =>
       setFilters((filters) => ({ ...filters, ...newFilters })),
@@ -32,7 +33,13 @@ const Books = (): JSX.Element | null => {
   return (
     <>
       <BooksHeader filters={filters} updateFilters={updateFilters} />
-      {books && <BooksList filters={filters} books={books} />}
+      {books && (
+        <BooksList
+          setSelectedBookId={setSelectedBookId}
+          filters={filters}
+          books={books}
+        />
+      )}
     </>
   )
 }

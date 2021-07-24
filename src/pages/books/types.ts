@@ -7,3 +7,5 @@ export interface Book {
 }
 
 export type BooksFilters = Partial<Pick<Book, 'author' | 'isbn'>>
+
+export type selectedBookIdType = Book['id'] | null
